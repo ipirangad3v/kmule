@@ -22,7 +22,7 @@ publishing {
         pom {
             name.set("KMULE - Kotlin Multiplatform Utilities Library for Everyone")
             description.set("KMULE is a set of utilities for Kotlin Multiplatform projects.")
-            url.set("https://github.com/Kotlin/multiplatform-library-template")
+            url.set("https://github.com/ipirangad3v/kmule")
 
             licenses {
                 license {
