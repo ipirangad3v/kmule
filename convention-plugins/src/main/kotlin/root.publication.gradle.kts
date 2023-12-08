@@ -3,7 +3,7 @@ plugins {
 }
 
 allprojects {
-    group = "thon.digital"
+    group = "digital.thon"
     version = "0.0.2"
 }
 
