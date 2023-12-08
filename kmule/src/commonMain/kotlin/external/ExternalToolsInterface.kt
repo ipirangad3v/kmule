@@ -1,6 +1,6 @@
 package external
 
-interface ExternalToolsInterface {
+internal interface ExternalToolsInterface {
     fun openSpotify(spotifyShowId: String)
 
     fun openYouTubeChannel(channelId: String)
