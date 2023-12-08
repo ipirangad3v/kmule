@@ -3,7 +3,7 @@ plugins {
 }
 
 allprojects {
-    group = "com.ipirangadev"
+    group = "thon.digital"
     version = "0.0.2"
 }
 
