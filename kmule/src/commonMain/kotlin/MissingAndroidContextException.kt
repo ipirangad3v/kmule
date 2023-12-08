@@ -1,0 +1,3 @@
+import Constants.MISSING_ANDROID_CONTEXT_EXCEPTION
+
+class MissingAndroidContextException : Exception(MISSING_ANDROID_CONTEXT_EXCEPTION)

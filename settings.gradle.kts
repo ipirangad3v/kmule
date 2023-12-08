@@ -1,11 +1,7 @@
 pluginManagement {
     includeBuild("convention-plugins")
     repositories {
-        google {
-            mavenContent {
-                releasesOnly()
-            }
-        }
+        google()
         mavenCentral()
         gradlePluginPortal()
     }
@@ -18,5 +14,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "dummylib-multiplatform"
-include(":library")
+rootProject.name = "kmule"
+include(":kmule")

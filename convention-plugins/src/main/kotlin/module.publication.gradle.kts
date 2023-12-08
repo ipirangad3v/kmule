@@ -7,9 +7,6 @@ plugins {
     signing
 }
 
-group = "com.github.asm0dey.dummylib"
-version = "0.0.1"
-
 publishing {
     // Configure all publications
     publications.withType<MavenPublication> {
@@ -19,11 +16,11 @@ publishing {
             archiveAppendix.set(this@withType.name)
         })
 
-        // Provide artifacts information requited by Maven Central
+        // Provide artifacts information required by Maven Central
         pom {
-            name.set("Dummy Kotlin Multiplatform library")
+            name.set("Kotlin Multiplatform library template")
             description.set("Dummy library to test deployment to Maven Central")
-            url.set("https://github.com/asm0dey/dummylib-multiplatform")
+            url.set("https://github.com/Kotlin/multiplatform-library-template")
 
             licenses {
                 license {
@@ -33,13 +30,14 @@ publishing {
             }
             developers {
                 developer {
-                    id.set("asm0dey")
-                    name.set("Pasha Finkelshteyn")
-                    email.set("asm0dey@jetbrains.com")
+                    id.set("kmule")
+                    name.set("ipirangadev")
+                    organization.set("ipirangadev")
+                    organizationUrl.set("https://github.com/ipirangad3v")
                 }
             }
             scm {
-                url.set("https://github.com/asm0dey/dummylib-multiplatform")
+                url.set("https://github.com/Kotlin/multiplatform-library-template")
             }
         }
     }
