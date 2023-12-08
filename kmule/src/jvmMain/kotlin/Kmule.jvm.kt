@@ -1,31 +1,18 @@
-import Constants.INSTAGRAM_PROFILE_URL
-import Constants.SPOTIFY_SHOW_URL
-import Constants.YOUTUBE_CHANNEL_URL
-import java.awt.Desktop
-import java.net.URI
+import external.ExternalTools
+import external.ExternalToolsInterface
 
-actual object Kmule {
-    actual fun openSpotify(spotifyShowId: String) {
-        val spotifyUrl = "$SPOTIFY_SHOW_URL$spotifyShowId"
-        openWebPage(spotifyUrl)
-    }
+actual object Kmule : ExternalToolsInterface {
+    private val externalTools by lazy { ExternalTools() }
+    actual override fun openSpotify(spotifyShowId: String) =
+        externalTools.openSpotify(spotifyShowId)
 
-    actual fun openYouTubeChannel(channelId: String) {
-        val youtubeUrl = "$YOUTUBE_CHANNEL_URL$channelId"
-        openWebPage(youtubeUrl)
-    }
+    actual override fun openYouTubeChannel(channelId: String) =
+        externalTools.openYouTubeChannel(channelId)
 
-    actual fun openInstagramProfile(profileId: String) {
-        val instagramUrl = "$INSTAGRAM_PROFILE_URL$profileId"
-        openWebPage(instagramUrl)
-    }
+    actual override fun openInstagramProfile(profileId: String) =
+        externalTools.openInstagramProfile(profileId)
 
-    actual fun openWebPage(url: String) {
-        if (Desktop.isDesktopSupported()) {
-            val desktop = Desktop.getDesktop()
-            if (desktop.isSupported(Desktop.Action.BROWSE)) {
-                desktop.browse(URI(url))
-            }
-        }
-    }
+    actual override fun openWebPage(url: String) = externalTools.openWebPage(url)
+
+
 }
