@@ -4,4 +4,6 @@ expect object Kmule {
     fun openYouTubeChannel(channelId: String)
 
     fun openInstagramProfile(profileId: String)
+
+    fun openWebPage(url: String)
 }

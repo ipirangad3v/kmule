@@ -1,16 +1,18 @@
 import Constants.INSTAGRAM_PROFILE_URL
 import Constants.SPOTIFY_SHOW_INTENT
 import Constants.SPOTIFY_SHOW_URL
+import Constants.YOUTUBE_APP_URL
 import Constants.YOUTUBE_CHANNEL_URL
 import platform.Foundation.NSURL
 import platform.UIKit.UIApplication
 
 actual object Kmule {
+    private val application = UIApplication.sharedApplication
+
     actual fun openSpotify(spotifyShowId: String) {
         val spotifyUrl = NSURL(string = SPOTIFY_SHOW_INTENT + spotifyShowId)
 
-        val application = UIApplication.sharedApplication
-        if (application.canOpenURL(spotifyUrl)) {
+        if (canOpenUrl(spotifyUrl)) {
             application.openURL(spotifyUrl)
         } else {
             // Se o Spotify não estiver instalado, abra a página web do show
@@ -20,11 +22,11 @@ actual object Kmule {
     }
 
     actual fun openYouTubeChannel(channelId: String) {
+        val appUrl = NSURL(string = YOUTUBE_APP_URL + channelId)
         val youtubeUrl = NSURL(string = YOUTUBE_CHANNEL_URL + channelId)
 
-        val application = UIApplication.sharedApplication
-        if (application.canOpenURL(youtubeUrl)) {
-            application.openURL(youtubeUrl)
+        if (canOpenUrl(appUrl)) {
+            application.openURL(appUrl)
         } else {
             // Abre a URL no navegador Safari se o aplicativo do YouTube não estiver disponível
             application.openURL(youtubeUrl)
@@ -33,12 +35,20 @@ actual object Kmule {
 
     actual fun openInstagramProfile(profileId: String) {
         val instagramUrl = NSURL(string = INSTAGRAM_PROFILE_URL + profileId)
-        val application = UIApplication.sharedApplication
-        if (application.canOpenURL(instagramUrl)) {
+        if (canOpenUrl(instagramUrl)) {
             application.openURL(instagramUrl)
         } else {
             // Abre a URL no navegador Safari se o aplicativo do Instagram não estiver disponível
             application.openURL(instagramUrl)
         }
     }
+
+    actual fun openWebPage(url: String) {
+        val webUrl = NSURL(string = url)
+        if (canOpenUrl(webUrl)) {
+            application.openURL(webUrl)
+        }
+    }
+
+    private fun canOpenUrl(url: NSURL): Boolean = application.canOpenURL(url)
 }

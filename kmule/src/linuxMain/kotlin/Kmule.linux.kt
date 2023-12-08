@@ -1,6 +1,9 @@
 import Constants.INSTAGRAM_PROFILE_URL
 import Constants.SPOTIFY_SHOW_URL
 import Constants.YOUTUBE_CHANNEL_URL
+import kotlinx.cinterop.ExperimentalForeignApi
+import platform.posix.pclose
+import platform.posix.popen
 
 actual object Kmule {
     actual fun openSpotify(spotifyShowId: String) {
@@ -18,15 +21,15 @@ actual object Kmule {
         openWebPage(instagramUrl)
     }
 
-    private fun openWebPage(url: String) {
-        //TODO
-//        try {
-//            val runtime = Runtime.getRuntime()
-//            // Usando `xdg-open` para abrir a URL no navegador padrão no Linux
-//            runtime.exec("xdg-open $url")
-//        } catch (e: IOException) {
-//            // Tratar exceções, como quando o comando não pode ser executado
-//            e.printStackTrace()
-//        }
+    @OptIn(ExperimentalForeignApi::class)
+    actual fun openWebPage(url: String) {
+        try {
+            val command = "xdg-open $url"
+            popen(command, "r")?.let { file ->
+                pclose(file)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }
