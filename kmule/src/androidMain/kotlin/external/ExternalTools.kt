@@ -4,16 +4,15 @@ import Constants.INSTAGRAM_PROFILE_URL
 import Constants.SPOTIFY_SHOW_INTENT
 import Constants.SPOTIFY_SHOW_URL
 import Constants.YOUTUBE_CHANNEL_URL
-import exceptions.MissingAndroidContextException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import exceptions.MissingAndroidContextException
 import java.lang.ref.WeakReference
 
 internal class ExternalTools(private val context: WeakReference<Context>?) :
     ExternalToolsInterface {
-
     private val packageManager: PackageManager
         get() = getContextOrThrow().packageManager
 
@@ -101,5 +100,4 @@ internal class ExternalTools(private val context: WeakReference<Context>?) :
             context?.get()!!.startActivity(webIntent)
         }
     }
-
 }

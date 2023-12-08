@@ -1,15 +1,14 @@
 package external
 
-import platform.Foundation.NSURL
-import platform.UIKit.UIApplication
 import Constants.INSTAGRAM_PROFILE_URL
 import Constants.SPOTIFY_SHOW_INTENT
 import Constants.SPOTIFY_SHOW_URL
 import Constants.YOUTUBE_APP_URL
 import Constants.YOUTUBE_CHANNEL_URL
+import platform.Foundation.NSURL
+import platform.UIKit.UIApplication
 
 internal class ExternalTools(private val application: UIApplication) : ExternalToolsInterface {
-
     override fun openSpotify(spotifyShowId: String) {
         val spotifyUrl = NSURL(string = SPOTIFY_SHOW_INTENT + spotifyShowId)
 

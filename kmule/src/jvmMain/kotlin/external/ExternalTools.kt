@@ -1,12 +1,12 @@
 package external
 
-import java.awt.Desktop
-import java.net.URI
 import Constants.INSTAGRAM_PROFILE_URL
 import Constants.SPOTIFY_SHOW_URL
 import Constants.YOUTUBE_CHANNEL_URL
+import java.awt.Desktop
+import java.net.URI
 
-class ExternalTools: ExternalToolsInterface {
+class ExternalTools : ExternalToolsInterface {
     override fun openSpotify(spotifyShowId: String) {
         val spotifyUrl = "$SPOTIFY_SHOW_URL$spotifyShowId"
         openWebPage(spotifyUrl)

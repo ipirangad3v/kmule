@@ -1,11 +1,11 @@
 package external
 
-import kotlinx.cinterop.ExperimentalForeignApi
-import platform.posix.pclose
-import platform.posix.popen
 import Constants.INSTAGRAM_PROFILE_URL
 import Constants.SPOTIFY_SHOW_URL
 import Constants.YOUTUBE_CHANNEL_URL
+import kotlinx.cinterop.ExperimentalForeignApi
+import platform.posix.pclose
+import platform.posix.popen
 
 internal class ExternalTools : ExternalToolsInterface {
     override fun openSpotify(spotifyShowId: String) {

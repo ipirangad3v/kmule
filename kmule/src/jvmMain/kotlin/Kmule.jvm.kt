@@ -3,16 +3,12 @@ import external.ExternalToolsInterface
 
 actual object Kmule : ExternalToolsInterface {
     private val externalTools by lazy { ExternalTools() }
-    actual override fun openSpotify(spotifyShowId: String) =
-        externalTools.openSpotify(spotifyShowId)
 
-    actual override fun openYouTubeChannel(channelId: String) =
-        externalTools.openYouTubeChannel(channelId)
+    actual override fun openSpotify(spotifyShowId: String) = externalTools.openSpotify(spotifyShowId)
 
-    actual override fun openInstagramProfile(profileId: String) =
-        externalTools.openInstagramProfile(profileId)
+    actual override fun openYouTubeChannel(channelId: String) = externalTools.openYouTubeChannel(channelId)
+
+    actual override fun openInstagramProfile(profileId: String) = externalTools.openInstagramProfile(profileId)
 
     actual override fun openWebPage(url: String) = externalTools.openWebPage(url)
-
-
 }
