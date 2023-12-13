@@ -46,7 +46,7 @@ publishing {
 }
 
 signing {
-    if (project.hasProperty("signing.gnupg.keyName")) {
+    if (project.hasProperty("Psigning.gnupg.keyName")) {
         useGpgCmd()
         sign(publishing.publications)
     }
