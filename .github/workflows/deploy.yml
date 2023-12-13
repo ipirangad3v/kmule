@@ -15,7 +15,6 @@ permissions:
 jobs:
   build:
     uses: ./.github/workflows/gradle.yml
-
   deploy:
     needs: build
     strategy:
@@ -56,8 +55,9 @@ jobs:
         with:
           arguments: |
             ${{ matrix.target }}
-            closeAndReleaseRepository
-            -Psigning.gnupg.keyName='${{secrets.OSSRH_GPG_SECRET_KEY_ID}}'
+            closeSonatypeStagingRepository
             -Psigning.gnupg.passphrase='${{secrets.OSSRH_GPG_SECRET_KEY_PASSWORD}}'
+            -Psigning.gnupg.keyName='${{secrets.OSSRH_GPG_SECRET_KEY_ID}}'
             -PsonatypeUsername='${{secrets.OSSRH_USERNAME}}'
             -PsonatypePassword='${{secrets.OSSRH_PASSWORD}}'
+
