@@ -60,3 +60,5 @@ jobs:
             -Psigning.gnupg.passphrase='${{secrets.OSSRH_GPG_SECRET_KEY_PASSWORD}}'
             -PsonatypeUsername='${{secrets.OSSRH_USERNAME}}'
             -PsonatypePassword='${{secrets.OSSRH_PASSWORD}}'
+      - name: Release to Sonatype
+        run: ./gradlew closeAndReleaseRepository
