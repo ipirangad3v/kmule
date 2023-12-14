@@ -58,11 +58,11 @@ signing {
         if (localPropertiesFile.exists()) {
             localPropertiesFile.inputStream().use {
                 localProperties.load(it)
+                val signingKey: String = localProperties.getProperty("signing.key")
+                val signingPassword: String = localProperties.getProperty("signing.password")
+                useInMemoryPgpKeys(signingKey, signingPassword)
+                sign(publishing.publications)
             }
         }
-        val signingKey: String = localProperties.getProperty("signing.key")
-        val signingPassword: String = localProperties.getProperty("signing.password")
-        useInMemoryPgpKeys(signingKey, signingPassword)
-        sign(publishing.publications)
     }
 }
