@@ -33,7 +33,25 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
-      - name: Validate Gradle Wrapper
+
+      - name: Check if GPG secrets are set
+        run: |
+          if [ -z "${{ secrets.OSSRH_GPG_SECRET_KEY }}" ] || [ -z "${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}" ] || [ -z "${{ secrets.OSSRH_GPG_SECRET_KEY_ID }}" ]; then
+            echo "GPG secrets are not set"
+            exit 1
+          else
+            echo "GPG secrets are set"
+          fi
+
+      - name: Check if Sonatype credentials are set
+        run: |
+          if [ -z "${{ secrets.OSSRH_USERNAME }}" ] || [ -z "${{ secrets.OSSRH_PASSWORD }}" ]; then
+            echo "Sonatype credentials are not set"
+            exit 1
+          else
+            echo "Sonatype credentials are set"
+          fi
+          - name: Validate Gradle Wrapper
         uses: gradle/wrapper-validation-action@v1
       - uses: actions/cache@v3
         with:
@@ -50,6 +68,7 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+
       - name: Gradle publish
         uses: gradle/gradle-build-action@ce999babab2de1c4b649dc15f0ee67e6246c994f
         with:
@@ -60,4 +79,3 @@ jobs:
             -Psigning.gnupg.keyName='${{secrets.OSSRH_GPG_SECRET_KEY_ID}}'
             -PsonatypeUsername='${{secrets.OSSRH_USERNAME}}'
             -PsonatypePassword='${{secrets.OSSRH_PASSWORD}}'
-
