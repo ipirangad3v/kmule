@@ -1,6 +1,7 @@
 import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.api.tasks.bundling.Jar
 import org.gradle.kotlin.dsl.`maven-publish`
+import java.util.Properties
 
 plugins {
     `maven-publish`
@@ -46,8 +47,22 @@ publishing {
 }
 
 signing {
+
     if (project.hasProperty("signing.gnupg.keyName")) {
         useGpgCmd()
+        sign(publishing.publications)
+    } else {
+        val localProperties = Properties()
+        val localPropertiesFile = rootProject.file("local.properties")
+
+        if (localPropertiesFile.exists()) {
+            localPropertiesFile.inputStream().use {
+                localProperties.load(it)
+            }
+        }
+        val signingKey: String = localProperties.getProperty("signing.key")
+        val signingPassword: String = localProperties.getProperty("signing.password")
+        useInMemoryPgpKeys(signingKey, signingPassword)
         sign(publishing.publications)
     }
 }
