@@ -27,8 +27,7 @@ To add `Kmule` to your project, follow:
        maven { url = "https://s01.oss.sonatype.org/content/repositories/releases/" }
    }
    ```
-3. Add the dependecy on the commonMain dependecies of your project:
-4.
+3. Add the dependency on the commonMain dependecies of your project:
 ```groovy
 sourceSets{
 commonMain.dependencies {
@@ -59,9 +58,6 @@ Here is a basic example of how to use the KMULE library in your project:
 import Kmule.openInstagramProfile
 import Kmule.openSpotify
 import Kmule.openYouTubeChannel
-import com.thondigital.nc.domain.model.ClickableMenuItem
-import com.thondigital.nc.network.model.NetworkConstants
-import com.thondigital.nc.presentation.ui.external.ExternalScreen
 
 object NavigationHelper {
     fun getNavigationItems(): List<ClickableMenuItem> =
