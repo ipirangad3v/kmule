@@ -51,7 +51,7 @@ jobs:
             echo "Sonatype credentials are set"
           fi
       - name: Validate Gradle Wrapper
-      - uses: actions/cache@v3
+        uses: actions/cache@v3
         with:
           path: |
             ~/.konan
