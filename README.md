@@ -4,9 +4,9 @@
 
 ## What is it?
 
-KMULE is a comprehensive, open-source library designed to enhance the Kotlin Multiplatform development experience. It provides a wide range of tools and utilities that simplify common programming tasks, fostering cross-platform consistency and code reusability.
-
-
+KMULE is a comprehensive, open-source library designed to enhance the Kotlin Multiplatform development experience. It
+provides a wide range of tools and utilities that simplify common programming tasks, fostering cross-platform
+consistency and code reusability.
 
 ## Project Configuration
 
@@ -21,21 +21,23 @@ To add `Kmule` to your project, follow:
 
 1. Open the `build.gradle.kts` file (or `build.gradle` if you are using groovy) of your project.
 2. Add the Sonatype repository on your project:
-   ```kotlin
+   ```groovy
    repositories {
        mavenCentral()
        maven { url = "https://s01.oss.sonatype.org/content/repositories/releases/" }
    }
    ```
 3. Add the dependecy on the commonMain dependecies of your project:
-   ```kotlin
-   sourceSets{
-   commonMain.dependencies {
-       implementation("digital.thon:kmule:<KMULE_VERSION>")
-   }
+4.
+```groovy
+sourceSets{
+commonMain.dependencies {
+    implementation("digital.thon:kmule:<KMULE_VERSION>")
 }
 
-   ```
+}
+
+```
 
 ## Usage
 
@@ -95,10 +97,10 @@ object NavigationHelper {
 
 These are currently the features supported by KMULE, new ones coming soon.
 
-
 ## Android Specific Configuration
 
-To ensure that the KMULE library works correctly in an Android app, you need to initialize it in the `onCreate` method of the `Application` class. Add the following code to your `Application` class:
+To ensure that the KMULE library works correctly in an Android app, you need to initialize it in the `onCreate` method
+of the `Application` class. Add the following code to your `Application` class:
 
 ```kotlin
 class App : Application() {
@@ -109,8 +111,8 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        
-       // Application context configuration and KMULE initialization
+
+        // Application context configuration and KMULE initialization
         appContext = applicationContext
         startKmule { appContext }
     }
