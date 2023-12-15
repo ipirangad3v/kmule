@@ -11,8 +11,8 @@ on: workflow_dispatch
 env:
   SIGNING_SECRET_KEY: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
   SIGNING_PASSWORD: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
-  OSSRH_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-  OSSRH_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+  OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+  OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
 
 permissions:
   contents: read
