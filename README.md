@@ -116,3 +116,16 @@ class App : Application() {
 ```
 
 This configuration ensures that the KMULE library has access to the application context when necessary.
+
+## iOS Specific Configuration
+
+Don't forget to add the following lines to your `Info.plist` file to ensure that the KMULE library works correctly on iOS:
+
+```xml
+<key>LSApplicationQueriesSchemes</key>
+<array>
+<string>youtube</string>
+<string>spotify</string>
+<string>instagram</string>
+</array>
+```
