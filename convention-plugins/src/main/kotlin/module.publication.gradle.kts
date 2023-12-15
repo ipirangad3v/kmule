@@ -1,3 +1,4 @@
+import java.io.BufferedReader
 import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.api.tasks.bundling.Jar
 import org.gradle.kotlin.dsl.`maven-publish`
@@ -6,6 +7,43 @@ import java.util.Properties
 plugins {
     `maven-publish`
     signing
+}
+
+ext["secretKey"] = null
+ext["signingPassword"] = null
+
+val secretPropsFile = project.rootProject.file("local.properties")
+if (secretPropsFile.exists()) {
+    secretPropsFile.reader().use {
+        Properties().apply {
+            load(it)
+        }
+    }.onEach { (name, value) ->
+        ext[name.toString()] = value
+    }
+    val props = Properties()
+    props.load(secretPropsFile.reader())
+    val gpgKeyId = props.getProperty("gpgKeyId")
+                   ?: throw IllegalStateException("Chave gpgKeyId não encontrada no arquivo local.properties")
+    val secretKeyCommand = "gpg --export-secret-keys -a $gpgKeyId"
+
+    try {
+        val process = Runtime.getRuntime().exec(secretKeyCommand)
+        process.waitFor()
+
+        if (process.exitValue() == 0) {
+            val secretKey = process.inputStream.bufferedReader().use(BufferedReader::readText)
+            ext["secretKey"] = secretKey
+        } else {
+            val errorOutput = process.errorStream.bufferedReader().use(BufferedReader::readText)
+            System.err.println("Erro ao executar o comando: $errorOutput")
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+} else {
+    ext["secretKey"] = System.getenv("SIGNING_SECRET_KEY")
+    ext["signingPassword"] = System.getenv("SIGNING_PASSWORD")
 }
 
 publishing {
@@ -47,22 +85,8 @@ publishing {
 }
 
 signing {
-
-    if (project.hasProperty("signing.gnupg.keyName")) {
-        useGpgCmd()
-        sign(publishing.publications)
-    } else {
-        val localProperties = Properties()
-        val localPropertiesFile = rootProject.file("local.properties")
-
-        if (localPropertiesFile.exists()) {
-            localPropertiesFile.inputStream().use {
-                localProperties.load(it)
-                val signingKey: String = localProperties.getProperty("signing.key")
-                val signingPassword: String = localProperties.getProperty("signing.password")
-                useInMemoryPgpKeys(signingKey, signingPassword)
-                sign(publishing.publications)
-            }
-        }
-    }
+    useInMemoryPgpKeys(getExtraString("secretKey"), getExtraString("signingPassword"))
+    sign(publishing.publications)
 }
+
+fun getExtraString(name: String) = ext[name]?.toString()
