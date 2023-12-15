@@ -1,7 +1,25 @@
+import gradle.kotlin.dsl.accessors._b6bea14fb88fd11e46d6fb1ebe601eab.ext
 import java.util.Properties
 
 plugins {
     id("io.github.gradle-nexus.publish-plugin")
+}
+
+ext["ossrhUsername"] = null
+ext["ossrhPassword"] = null
+
+val secretPropsFile = project.rootProject.file("local.properties")
+if (secretPropsFile.exists()) {
+    secretPropsFile.reader().use {
+        Properties().apply {
+            load(it)
+        }
+    }.onEach { (name, value) ->
+        ext[name.toString()] = value
+    }
+} else {
+    ext["ossrhUsername"] = System.getenv("OSSRH_USERNAME")
+    ext["ossrhPassword"] = System.getenv("OSSRH_PASSWORD")
 }
 
 allprojects {
@@ -22,8 +40,8 @@ nexusPublishing {
             if (localPropertiesFile.exists()) {
                 localPropertiesFile.inputStream().use {
                     localProperties.load(it)
-                    this.username.set(localProperties.getProperty("sonatype.username"))
-                    this.password.set(localProperties.getProperty("sonatype.password"))
+                    this.username.set(localProperties.getProperty("ossrhUsername"))
+                    this.password.set(localProperties.getProperty("ossrhPassword"))
                 }
             }
 

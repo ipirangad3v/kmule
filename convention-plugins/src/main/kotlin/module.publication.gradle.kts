@@ -8,6 +8,23 @@ plugins {
     signing
 }
 
+ext["secretKey"] = null
+ext["signingPassword"] = null
+
+val secretPropsFile = project.rootProject.file("local.properties")
+if (secretPropsFile.exists()) {
+    secretPropsFile.reader().use {
+        Properties().apply {
+            load(it)
+        }
+    }.onEach { (name, value) ->
+        ext[name.toString()] = value
+    }
+} else {
+    ext["secretKey"] = System.getenv("SIGNING_SECRET_KEY")
+    ext["signingPassword"] = System.getenv("SIGNING_PASSWORD")
+}
+
 publishing {
     // Configure all publications
     publications.withType<MavenPublication> {
@@ -47,22 +64,8 @@ publishing {
 }
 
 signing {
-
-    if (project.hasProperty("signing.gnupg.keyName")) {
-        useGpgCmd()
-        sign(publishing.publications)
-    } else {
-        val localProperties = Properties()
-        val localPropertiesFile = rootProject.file("local.properties")
-
-        if (localPropertiesFile.exists()) {
-            localPropertiesFile.inputStream().use {
-                localProperties.load(it)
-                val signingKey: String = localProperties.getProperty("signing.key")
-                val signingPassword: String = localProperties.getProperty("signing.password")
-                useInMemoryPgpKeys(signingKey, signingPassword)
-                sign(publishing.publications)
-            }
-        }
-    }
+    useInMemoryPgpKeys(getExtraString("secretKey"), getExtraString("signingPassword"))
+    sign(publishing.publications)
 }
+
+fun getExtraString(name: String) = ext[name]?.toString()

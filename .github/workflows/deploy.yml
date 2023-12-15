@@ -8,6 +8,11 @@
 name: Deploy to central
 
 on: workflow_dispatch
+env:
+  SIGNING_SECRET_KEY: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
+  SIGNING_PASSWORD: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
+  OSSRH_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+  OSSRH_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
 
 permissions:
   contents: read
@@ -73,7 +78,3 @@ jobs:
           arguments: |
             ${{ matrix.target }}
             closeSonatypeStagingRepository
-            -Psigning.gnupg.passphrase='${{secrets.OSSRH_GPG_SECRET_KEY_PASSWORD}}'
-            -Psigning.gnupg.keyName='${{secrets.OSSRH_GPG_SECRET_KEY_ID}}'
-            -PsonatypeUsername='${{secrets.OSSRH_USERNAME}}'
-            -PsonatypePassword='${{secrets.OSSRH_PASSWORD}}'
