@@ -13,4 +13,6 @@ actual object Kmule : ExternalToolsInterface {
     actual override fun openInstagramProfile(profileId: String) = externalTools.openInstagramProfile(profileId)
 
     actual override fun openWebPage(url: String) = externalTools.openWebPage(url)
+
+    actual override fun openCallApp(phoneNumber: String?) = externalTools.openCallApp(phoneNumber)
 }

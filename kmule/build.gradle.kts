@@ -6,7 +6,6 @@ plugins {
 
 kotlin {
     targetHierarchy.default()
-    jvm()
     androidTarget {
         publishLibraryVariants("release")
         compilations.all {
@@ -18,7 +17,6 @@ kotlin {
     iosX64()
     iosArm64()
     iosSimulatorArm64()
-    linuxX64()
 
     sourceSets {
         val commonMain by getting {

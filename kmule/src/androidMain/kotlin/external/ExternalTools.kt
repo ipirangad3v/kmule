@@ -16,88 +16,56 @@ internal class ExternalTools(private val context: WeakReference<Context>?) :
     private val packageManager: PackageManager
         get() = getContextOrThrow().packageManager
 
+
+    override fun openSpotify(spotifyShowId: String) {
+
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(SPOTIFY_SHOW_INTENT + spotifyShowId))
+        val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse(SPOTIFY_SHOW_URL + spotifyShowId))
+        handleIntent(
+            intent, webIntent
+        )
+    }
+
+    override fun openYouTubeChannel(channelId: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(YOUTUBE_CHANNEL_URL + channelId))
+        handleIntent(
+            intent, intent
+        )
+    }
+
+    override fun openInstagramProfile(profileId: String) {
+        val intent = Intent(
+            Intent.ACTION_VIEW, Uri.parse(INSTAGRAM_PROFILE_URL + profileId)
+
+        )
+        handleIntent(
+            intent, intent
+        )
+    }
+
+    override fun openWebPage(url: String) {
+        handleIntent(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+    }
+
+    override fun openCallApp(phoneNumber: String?) {
+        handleIntent(
+            Intent(Intent.ACTION_DIAL, Uri.parse("tel:${phoneNumber ?: ""}}"))
+        )
+    }
+
     private fun getContextOrThrow(): Context {
         return context?.get() ?: throw MissingAndroidContextException()
     }
 
-    override fun openSpotify(spotifyShowId: String) {
+    private fun handleIntent(intent: Intent, fallback: Intent? = null) {
         getContextOrThrow()
-        val intent =
-            Intent(Intent.ACTION_VIEW, Uri.parse(SPOTIFY_SHOW_INTENT + spotifyShowId)).apply {
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            }
-
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        fallback?.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         if (intent.resolveActivity(packageManager) != null) {
-            context?.get()!!.startActivity(intent)
+            context?.get()?.startActivity(intent)
         } else {
-            // Se o Spotify não estiver instalado, abra a página web do show
-            val webIntent =
-                Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse("$SPOTIFY_SHOW_URL$spotifyShowId"),
-                ).apply {
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }
-            context?.get()!!.startActivity(webIntent)
+            context?.get()?.startActivity(fallback)
         }
-    }
 
-    override fun openYouTubeChannel(channelId: String) {
-        getContextOrThrow()
-        val youtubeUrl = YOUTUBE_CHANNEL_URL + channelId
-        val intent =
-            Intent(Intent.ACTION_VIEW, Uri.parse(youtubeUrl)).apply {
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            }
-
-        if (intent.resolveActivity(packageManager) != null) {
-            context?.get()!!.startActivity(intent)
-        } else {
-            // Abre a URL no navegador se nenhum aplicativo correspondente for encontrado
-            val webIntent =
-                Intent(Intent.ACTION_VIEW, Uri.parse(youtubeUrl)).apply {
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }
-            context?.get()!!.startActivity(webIntent)
-        }
-    }
-
-    override fun openInstagramProfile(profileId: String) {
-        getContextOrThrow()
-        val instagramUrl = INSTAGRAM_PROFILE_URL + profileId
-        val intent =
-            Intent(Intent.ACTION_VIEW, Uri.parse(instagramUrl)).apply {
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            }
-
-        if (intent.resolveActivity(packageManager) != null) {
-            context?.get()!!.startActivity(intent)
-        } else {
-            // Abre a URL no navegador se nenhum aplicativo correspondente for encontrado
-            val webIntent =
-                Intent(Intent.ACTION_VIEW, Uri.parse(instagramUrl)).apply {
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }
-            context?.get()!!.startActivity(webIntent)
-        }
-    }
-
-    override fun openWebPage(url: String) {
-        getContextOrThrow()
-        val intent =
-            Intent(Intent.ACTION_VIEW, Uri.parse(url)).apply {
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            }
-
-        if (intent.resolveActivity(packageManager) != null) {
-            context?.get()!!.startActivity(intent)
-        } else {
-            // Abre a URL no navegador se nenhum aplicativo correspondente for encontrado
-            val webIntent =
-                Intent(Intent.ACTION_VIEW, Uri.parse(url)).apply {
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }
-            context?.get()!!.startActivity(webIntent)
-        }
     }
 }
