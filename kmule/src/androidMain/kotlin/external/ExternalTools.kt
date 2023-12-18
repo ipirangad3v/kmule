@@ -1,9 +1,8 @@
 package external
 
-import Constants.INSTAGRAM_PROFILE_URL
-import Constants.SPOTIFY_SHOW_INTENT
-import Constants.SPOTIFY_SHOW_URL
-import Constants.YOUTUBE_CHANNEL_URL
+import Constants.INSTAGRAM_URL
+import Constants.SPOTIFY_URL
+import Constants.YOUTUBE_URL
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -17,25 +16,27 @@ internal class ExternalTools(private val context: WeakReference<Context>?) :
         get() = getContextOrThrow().packageManager
 
 
-    override fun openSpotify(spotifyShowId: String) {
+    override fun openSpotify(spotifyShowId: String?) {
 
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(SPOTIFY_SHOW_INTENT + spotifyShowId))
-        val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse(SPOTIFY_SHOW_URL + spotifyShowId))
-        handleIntent(
-            intent, webIntent
+        val intent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse(if (spotifyShowId != null) "${SPOTIFY_URL}show/$spotifyShowId" else SPOTIFY_URL)
         )
-    }
-
-    override fun openYouTubeChannel(channelId: String) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(YOUTUBE_CHANNEL_URL + channelId))
         handleIntent(
             intent, intent
         )
     }
 
-    override fun openInstagramProfile(profileId: String) {
+    override fun openYouTube(channelId: String?) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(YOUTUBE_URL + (channelId ?: "")))
+        handleIntent(
+            intent, intent
+        )
+    }
+
+    override fun openInstagram(profileId: String?) {
         val intent = Intent(
-            Intent.ACTION_VIEW, Uri.parse(INSTAGRAM_PROFILE_URL + profileId)
+            Intent.ACTION_VIEW, Uri.parse(INSTAGRAM_URL + (profileId ?: ""))
 
         )
         handleIntent(

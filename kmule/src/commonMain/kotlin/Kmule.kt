@@ -1,11 +1,13 @@
-expect object Kmule {
-    fun openSpotify(spotifyShowId: String)
+import external.ExternalToolsInterface
 
-    fun openYouTubeChannel(channelId: String)
+expect object Kmule : ExternalToolsInterface {
+    override fun openSpotify(spotifyShowId: String?)
 
-    fun openInstagramProfile(profileId: String)
+    override fun openYouTube(channelId: String?)
 
-    fun openWebPage(url: String)
+    override fun openInstagram(profileId: String?)
 
-    fun openCallApp(phoneNumber: String?)
+    override fun openWebPage(url: String)
+
+    override fun openCallApp(phoneNumber: String?)
 }
