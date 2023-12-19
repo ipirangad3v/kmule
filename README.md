@@ -2,7 +2,8 @@
 
 <img src="https://github.com/ipirangad3v/kmule/blob/main/images/kmule.png"/>
 
-![Latest Version](https://img.shields.io/maven-central/v/digital.thon/kmule) ![Coverage](https://img.shields.io/codecov/c/github/ipirangad3v/kmule) ![License](https://img.shields.io/github/license/ipirangad3v/kmule) ![Stars](https://img.shields.io/github/stars/ipirangad3v/kmule)
+![Latest Version](https://img.shields.io/maven-central/v/digital.thon/kmule) ![Coverage](https://img.shields.io/codecov/c/github/ipirangad3v/kmule) ![License](https://img.shields.io/github/license/ipirangad3v/kmule) ![Stars](https://img.shields.io/github/stars/ipirangad3v/kmule) ![Build Status](https://img.shields.io/github/workflow/status/ipirangad3v/kmule/gradle)
+
 
 ## What is it?
 
