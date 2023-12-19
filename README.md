@@ -2,6 +2,8 @@
 
 <img src="https://github.com/ipirangad3v/kmule/blob/main/images/kmule.png"/>
 
+![Latest Version](https://img.shields.io/maven-central/v/digital.thon/kmule)
+
 ## What is it?
 
 KMULE is a comprehensive, open-source library designed to enhance the Kotlin Multiplatform
