@@ -1,52 +1,56 @@
 package external
 
-import Constants.INSTAGRAM_PROFILE_URL
+import Constants.INSTAGRAM_URL
 import Constants.SPOTIFY_SHOW_INTENT
-import Constants.SPOTIFY_SHOW_URL
-import Constants.YOUTUBE_APP_URL
-import Constants.YOUTUBE_CHANNEL_URL
+import Constants.SPOTIFY_URL
+import Constants.YOUTUBE_IOS_APP_URL
+import Constants.YOUTUBE_URL
 import platform.Foundation.NSURL
 import platform.UIKit.UIApplication
 
 internal class ExternalTools(private val application: UIApplication) : ExternalToolsInterface {
-    override fun openSpotify(spotifyShowId: String) {
-        val spotifyUrl = NSURL(string = SPOTIFY_SHOW_INTENT + spotifyShowId)
+    override fun openSpotify(spotifyShowId: String?) {
+        val spotifyUrl =
+            NSURL(string = if (spotifyShowId != null) "$SPOTIFY_SHOW_INTENT:show:$spotifyShowId" else SPOTIFY_SHOW_INTENT)
+        val webUrl =
+            NSURL(string = if (spotifyShowId != null) SPOTIFY_URL + "show/$spotifyShowId" else SPOTIFY_URL)
 
-        if (canOpenUrl(spotifyUrl)) {
-            application.openURL(spotifyUrl)
-        } else {
-            // Se o Spotify não estiver instalado, abra a página web do show
-            val webUrl = NSURL(string = SPOTIFY_SHOW_URL + spotifyShowId)
-            application.openURL(webUrl)
-        }
+        handleIntent(spotifyUrl, webUrl)
     }
 
-    override fun openYouTubeChannel(channelId: String) {
-        val appUrl = NSURL(string = YOUTUBE_APP_URL + channelId)
-        val youtubeUrl = NSURL(string = YOUTUBE_CHANNEL_URL + channelId)
+    override fun openYouTube(channelId: String?) {
+        val appUrl =
+            NSURL(string = if (channelId != null) YOUTUBE_IOS_APP_URL + "channel/" + channelId else YOUTUBE_IOS_APP_URL)
+        val youtubeUrl =
+            NSURL(string = if (channelId != null) YOUTUBE_URL + "channel/" + channelId else YOUTUBE_URL)
 
-        if (canOpenUrl(appUrl)) {
-            application.openURL(appUrl)
-        } else {
-            // Abre a URL no navegador Safari se o aplicativo do YouTube não estiver disponível
-            application.openURL(youtubeUrl)
-        }
+        handleIntent(
+            appUrl, youtubeUrl
+        )
     }
 
-    override fun openInstagramProfile(profileId: String) {
-        val instagramUrl = NSURL(string = INSTAGRAM_PROFILE_URL + profileId)
-        if (canOpenUrl(instagramUrl)) {
-            application.openURL(instagramUrl)
-        } else {
-            // Abre a URL no navegador Safari se o aplicativo do Instagram não estiver disponível
-            application.openURL(instagramUrl)
-        }
+    override fun openInstagram(profileId: String?) {
+        val instagramUrl = NSURL(string = INSTAGRAM_URL + (profileId ?: ""))
+        handleIntent(instagramUrl, instagramUrl)
     }
 
     override fun openWebPage(url: String) {
-        val webUrl = NSURL(string = url)
-        if (canOpenUrl(webUrl)) {
-            application.openURL(webUrl)
+        handleIntent(NSURL(string = url))
+    }
+
+    override fun openCallApp(phoneNumber: String?) {
+        val callUrl = NSURL(string = "tel:${phoneNumber ?: ""}}")
+        handleIntent(callUrl)
+    }
+
+    private fun handleIntent(intent: NSURL, fallback: NSURL? = null) {
+        if (canOpenUrl(intent)) {
+            application.openURL(intent)
+        } else {
+            // Abre a URL no navegador Safari se o aplicativo do YouTube não estiver disponível
+            if (fallback != null) {
+                application.openURL(fallback)
+            }
         }
     }
 

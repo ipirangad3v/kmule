@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "kmule"
 include(":kmule")
+include(":sampleapp")

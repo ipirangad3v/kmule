@@ -1,11 +1,13 @@
 package external
 
 internal interface ExternalToolsInterface {
-    fun openSpotify(spotifyShowId: String)
+    fun openSpotify(spotifyShowId: String? = null)
 
-    fun openYouTubeChannel(channelId: String)
+    fun openYouTube(channelId: String? = null)
 
-    fun openInstagramProfile(profileId: String)
+    fun openInstagram(profileId: String? = null)
 
     fun openWebPage(url: String)
+
+    fun openCallApp(phoneNumber: String? = null)
 }
