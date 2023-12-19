@@ -49,9 +49,14 @@ sourceSets {
 Currently, the KMULE library offers several useful functions that can be used directly in
 the `commonMain` module. These functions include:
 
-- `openSpotify(showId: String)`: Opens Spotify and directs to the specific show.
-- `openYoutube(youtubeChannel: String)`: Opens YouTube and directs to the specified channel.
-- `openInstagram(instagramProfile: String)`: Opens Instagram and directs to the specified profile.
+- `openSpotify(showId: String?)`: Opens Spotify and directs to the specific show. If the showId is
+  null, the Spotify app will open on the home screen.
+- `openYoutube(youtubeChannel: String?)`: Opens YouTube and directs to the specified channel. If the
+  channel is null, the YouTube app will open on the home screen.
+- `openInstagram(instagramProfile: String?)`: Opens Instagram and directs to the specified profile. If the
+  profile is null, the Instagram app will open on the home screen.
+- `openCallApp(phoneNumber: String?)`: Opens Twitter and directs to the specified profile. If the
+  profile is null, the Twitter app will open with empty prompt.
 - `openWebPage(url: String)`: Opens a web page in the default browser.
 
 Each implementation of these functions is optimized to work natively on different platforms. For
