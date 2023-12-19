@@ -1,2 +1,3 @@
 *.roff linguist-detectable=false
+*.rof linguist-detectable=false
 *.5ms linguist-detectable=false
