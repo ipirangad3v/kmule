@@ -10,7 +10,7 @@ ext["ossrhPassword"] = null
 
 allprojects {
     group = "digital.thon"
-    version = "0.0.2"
+    version = "0.0.3"
 }
 
 nexusPublishing {
@@ -32,13 +32,11 @@ nexusPublishing {
                     this.password.set(localProperties.getProperty("ossrhPassword"))
                 }
             }
-
-
         }
     }
 }
-fun importSecrets() {
 
+fun importSecrets() {
     val secretPropsFile = project.rootProject.file("local.properties")
     if (secretPropsFile.exists()) {
         secretPropsFile.reader().use {

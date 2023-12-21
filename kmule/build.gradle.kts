@@ -19,9 +19,14 @@ kotlin {
     iosSimulatorArm64()
 
     sourceSets {
+        val androidMain by getting {
+            dependencies {
+                implementation(libs.coroutines.android)
+            }
+        }
         val commonMain by getting {
             dependencies {
-                // put your multiplatform dependencies here
+                implementation(libs.coroutines.core)
             }
         }
         val commonTest by getting {

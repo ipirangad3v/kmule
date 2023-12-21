@@ -1,6 +1,7 @@
 import external.ExternalToolsInterface
+import sensors.SensorToolsInterface
 
-expect object Kmule : ExternalToolsInterface {
+expect object Kmule : ExternalToolsInterface, SensorToolsInterface {
     override fun openSpotify(spotifyShowId: String?)
 
     override fun openYouTube(channelId: String?)
