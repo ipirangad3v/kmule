@@ -11,7 +11,9 @@ import platform.UIKit.UIApplication
 internal class ExternalTools(private val application: UIApplication) : ExternalToolsInterface {
     override fun openSpotify(spotifyShowId: String?) {
         val spotifyUrl =
-            NSURL(string = if (spotifyShowId != null) "$SPOTIFY_SHOW_INTENT:show:$spotifyShowId" else SPOTIFY_SHOW_INTENT)
+            NSURL(
+                string = if (spotifyShowId != null) "$SPOTIFY_SHOW_INTENT:show:$spotifyShowId" else SPOTIFY_SHOW_INTENT
+            )
         val webUrl =
             NSURL(string = if (spotifyShowId != null) SPOTIFY_URL + "show/$spotifyShowId" else SPOTIFY_URL)
 
@@ -25,7 +27,8 @@ internal class ExternalTools(private val application: UIApplication) : ExternalT
             NSURL(string = if (channelId != null) YOUTUBE_URL + "channel/" + channelId else YOUTUBE_URL)
 
         handleIntent(
-            appUrl, youtubeUrl
+            appUrl,
+            youtubeUrl
         )
     }
 
@@ -43,7 +46,10 @@ internal class ExternalTools(private val application: UIApplication) : ExternalT
         handleIntent(callUrl)
     }
 
-    private fun handleIntent(intent: NSURL, fallback: NSURL? = null) {
+    private fun handleIntent(
+        intent: NSURL,
+        fallback: NSURL? = null
+    ) {
         if (canOpenUrl(intent)) {
             application.openURL(intent)
         } else {

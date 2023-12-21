@@ -40,7 +40,7 @@ kotlin {
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
 
-            //kmule
+            // kmule
             implementation(project(":kmule"))
         }
         commonTest.dependencies {
@@ -61,9 +61,12 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
-    namespace = "com.thondigital.sampleapp"
+    namespace = "digital.thon.sampleapp"
     compileSdk = 34
     defaultConfig {
         minSdk = 24
     }
+}
+dependencies {
+    implementation(project(":kmule"))
 }

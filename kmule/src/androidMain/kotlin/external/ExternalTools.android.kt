@@ -15,32 +15,35 @@ internal class ExternalTools(private val context: WeakReference<Context>?) :
     private val packageManager: PackageManager
         get() = getContextOrThrow().packageManager
 
-
     override fun openSpotify(spotifyShowId: String?) {
-
-        val intent = Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse(if (spotifyShowId != null) "${SPOTIFY_URL}show/$spotifyShowId" else SPOTIFY_URL)
-        )
+        val intent =
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(if (spotifyShowId != null) "${SPOTIFY_URL}show/$spotifyShowId" else SPOTIFY_URL)
+            )
         handleIntent(
-            intent, intent
+            intent,
+            intent
         )
     }
 
     override fun openYouTube(channelId: String?) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(YOUTUBE_URL + (channelId ?: "")))
         handleIntent(
-            intent, intent
+            intent,
+            intent
         )
     }
 
     override fun openInstagram(profileId: String?) {
-        val intent = Intent(
-            Intent.ACTION_VIEW, Uri.parse(INSTAGRAM_URL + (profileId ?: ""))
-
-        )
+        val intent =
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(INSTAGRAM_URL + (profileId ?: ""))
+            )
         handleIntent(
-            intent, intent
+            intent,
+            intent
         )
     }
 
@@ -58,7 +61,10 @@ internal class ExternalTools(private val context: WeakReference<Context>?) :
         return context?.get() ?: throw MissingAndroidContextException()
     }
 
-    private fun handleIntent(intent: Intent, fallback: Intent? = null) {
+    private fun handleIntent(
+        intent: Intent,
+        fallback: Intent? = null
+    ) {
         getContextOrThrow()
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         fallback?.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -67,6 +73,5 @@ internal class ExternalTools(private val context: WeakReference<Context>?) :
         } else {
             context?.get()?.startActivity(fallback)
         }
-
     }
 }

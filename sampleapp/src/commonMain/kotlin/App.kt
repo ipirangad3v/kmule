@@ -5,7 +5,7 @@ import com.thondigital.sampleapp.presentation.ui.home.HomeScreen
 @Composable
 fun App(
     darkTheme: Boolean,
-    dynamicColor: Boolean,
+    dynamicColor: Boolean
 ) {
     NCTheme(
         darkTheme = darkTheme,
