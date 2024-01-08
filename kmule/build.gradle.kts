@@ -33,7 +33,7 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(libs.kotlin.test)
-                implementation(libs.ktor.client.ios)
+                runtimeOnly(libs.ktor.client.ios)
             }
         }
     }
