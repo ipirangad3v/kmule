@@ -1,15 +1,15 @@
 import external.ExternalTools
 import external.ExternalToolsInterface
+import network.NetworkStatusObserver
+import network.NetworkToolsInterface
 import platform.UIKit.UIApplication
-import sensors.CommonFlow
-import sensors.SensorDataInterface
-import sensors.SensorToolsInterface
-import sensors.SensorsTools
 
-actual object Kmule : ExternalToolsInterface, SensorToolsInterface {
+actual object Kmule : ExternalToolsInterface, NetworkToolsInterface {
     private val application = UIApplication.sharedApplication
     private val externalTools = ExternalTools(application)
-    private val sensorsTools = SensorsTools()
+    private val networkStatusObserver = NetworkStatusObserver()
+    actual override val networkStatus = networkStatusObserver.networkStatus
+
 
     actual override fun openSpotify(spotifyShowId: String?) = externalTools.openSpotify(spotifyShowId)
 
@@ -21,12 +21,4 @@ actual object Kmule : ExternalToolsInterface, SensorToolsInterface {
 
     actual override fun openCallApp(phoneNumber: String?) = externalTools.openCallApp(phoneNumber)
 
-    override val accelerometerData: CommonFlow<SensorDataInterface?>
-        get() = sensorsTools.accelerometerData
-    override val isAccelerometerEnabled: Boolean
-        get() = sensorsTools.isAccelerometerEnabled
-
-    override fun startAccelerometer() = sensorsTools.startAccelerometer()
-
-    override fun stopAccelerometer() = sensorsTools.stopAccelerometer()
 }

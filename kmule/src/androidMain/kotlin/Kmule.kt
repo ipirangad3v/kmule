@@ -2,23 +2,22 @@ import android.content.Context
 import exceptions.MissingAndroidContextException
 import external.ExternalTools
 import external.ExternalToolsInterface
-import sensors.CommonFlow
-import sensors.SensorDataInterface
-import sensors.SensorToolsInterface
-import sensors.SensorsTools
 import java.lang.ref.WeakReference
+import network.NetworkStatusObserver
+import network.NetworkToolsInterface
 
-actual object Kmule : ExternalToolsInterface, SensorToolsInterface {
+actual object Kmule : ExternalToolsInterface, NetworkToolsInterface {
     private var context: WeakReference<Context>? = null
     private lateinit var externalTools: ExternalToolsInterface
-    private lateinit var sensorTools: SensorToolsInterface
+    private val networkStatusObserver = NetworkStatusObserver()
+    actual override val networkStatus = networkStatusObserver.networkStatus
+
 
     fun startKmule(context: () -> Context) =
         apply {
             val weakContext = WeakReference(context())
             this.context = weakContext
             externalTools = ExternalTools(weakContext)
-            sensorTools = SensorsTools(weakContext)
             if (weakContext.get() == null) throw MissingAndroidContextException()
         }
 
@@ -31,13 +30,4 @@ actual object Kmule : ExternalToolsInterface, SensorToolsInterface {
     actual override fun openWebPage(url: String) = externalTools.openWebPage(url)
 
     actual override fun openCallApp(phoneNumber: String?) = externalTools.openCallApp(phoneNumber)
-
-    override val accelerometerData: CommonFlow<SensorDataInterface?>
-        get() = sensorTools.accelerometerData
-    override val isAccelerometerEnabled: Boolean
-        get() = sensorTools.isAccelerometerEnabled
-
-    override fun startAccelerometer() = sensorTools.startAccelerometer()
-
-    override fun stopAccelerometer() = sensorTools.stopAccelerometer()
 }
