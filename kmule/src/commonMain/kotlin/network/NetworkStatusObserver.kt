@@ -4,6 +4,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,12 +19,12 @@ class NetworkStatusObserver {
         observeNetworkStatus()
     }
 
-    private fun observeNetworkStatus() {
+    private fun observeNetworkStatus(retrieveTimeMillis: Long = 5000) {
         CoroutineScope(Dispatchers.Main).launch {
             while (true) {
                 val isNetworkAvailable = checkNetworkStatus()
                 _networkStatus.value = isNetworkAvailable
-                kotlinx.coroutines.delay(5000) // Verificar o status da rede a cada 5 segundos
+                delay(retrieveTimeMillis) // Verificar o status da rede a cada 5 segundos
             }
         }
     }

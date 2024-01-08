@@ -8,7 +8,7 @@ actual object Kmule : ExternalToolsInterface, NetworkToolsInterface {
     private val application = UIApplication.sharedApplication
     private val externalTools = ExternalTools(application)
     private val networkStatusObserver = NetworkStatusObserver()
-    override val networkStatus = networkStatusObserver.networkStatus
+    actual override val networkStatus = networkStatusObserver.networkStatus
 
 
     actual override fun openSpotify(spotifyShowId: String?) = externalTools.openSpotify(spotifyShowId)

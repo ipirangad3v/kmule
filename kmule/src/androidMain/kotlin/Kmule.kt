@@ -10,7 +10,7 @@ actual object Kmule : ExternalToolsInterface, NetworkToolsInterface {
     private var context: WeakReference<Context>? = null
     private lateinit var externalTools: ExternalToolsInterface
     private val networkStatusObserver = NetworkStatusObserver()
-    override val networkStatus = networkStatusObserver.networkStatus
+    actual override val networkStatus = networkStatusObserver.networkStatus
 
 
     fun startKmule(context: () -> Context) =
