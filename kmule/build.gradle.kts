@@ -24,6 +24,11 @@ kotlin {
                 implementation(libs.coroutines.android)
             }
         }
+        val iosMain by getting {
+            dependencies {
+                implementation(libs.ktor.client.ios)
+            }
+        }
         val commonMain by getting {
             dependencies {
                 implementation(libs.coroutines.core)
@@ -33,7 +38,6 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(libs.kotlin.test)
-                runtimeOnly(libs.ktor.client.ios)
             }
         }
     }
