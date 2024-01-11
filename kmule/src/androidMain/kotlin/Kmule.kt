@@ -2,16 +2,15 @@ import android.content.Context
 import exceptions.MissingAndroidContextException
 import external.ExternalTools
 import external.ExternalToolsInterface
-import java.lang.ref.WeakReference
 import network.NetworkStatusObserver
 import network.NetworkToolsInterface
+import java.lang.ref.WeakReference
 
 actual object Kmule : ExternalToolsInterface, NetworkToolsInterface {
     private var context: WeakReference<Context>? = null
     private lateinit var externalTools: ExternalToolsInterface
     private val networkStatusObserver = NetworkStatusObserver()
     actual override val networkStatus = networkStatusObserver.networkStatus
-
 
     fun startKmule(context: () -> Context) =
         apply {

@@ -48,12 +48,15 @@ internal class ExternalTools(private val context: WeakReference<Context>?) :
     }
 
     override fun openWebPage(url: String) {
-        handleIntent(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        handleIntent(intent, intent)
     }
 
     override fun openCallApp(phoneNumber: String?) {
+        val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:${phoneNumber ?: ""}"))
         handleIntent(
-            Intent(Intent.ACTION_DIAL, Uri.parse("tel:${phoneNumber ?: ""}}"))
+            intent,
+            intent
         )
     }
 

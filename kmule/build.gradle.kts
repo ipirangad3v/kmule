@@ -19,26 +19,20 @@ kotlin {
     iosSimulatorArm64()
 
     sourceSets {
-        val androidMain by getting {
-            dependencies {
-                implementation(libs.coroutines.android)
-            }
+        androidMain.dependencies {
+            implementation(libs.coroutines.android)
         }
-        val iosMain by getting {
-            dependencies {
-                implementation(libs.ktor.client.ios)
-            }
+        iosMain.dependencies {
+            implementation(libs.ktor.client.ios)
         }
-        val commonMain by getting {
-            dependencies {
-                implementation(libs.coroutines.core)
-                implementation(libs.ktor.client.core)
-            }
+        commonMain.dependencies {
+            implementation(libs.coroutines.core)
+            implementation(libs.ktor.client.core)
         }
-        val commonTest by getting {
-            dependencies {
-                implementation(libs.kotlin.test)
-            }
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+            implementation(libs.mockito.core)
+            implementation(libs.roboelectric)
         }
     }
 }

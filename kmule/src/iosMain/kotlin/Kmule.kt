@@ -10,7 +10,6 @@ actual object Kmule : ExternalToolsInterface, NetworkToolsInterface {
     private val networkStatusObserver = NetworkStatusObserver()
     actual override val networkStatus = networkStatusObserver.networkStatus
 
-
     actual override fun openSpotify(spotifyShowId: String?) = externalTools.openSpotify(spotifyShowId)
 
     actual override fun openYouTube(channelId: String?) = externalTools.openYouTube(channelId)
@@ -20,5 +19,4 @@ actual object Kmule : ExternalToolsInterface, NetworkToolsInterface {
     actual override fun openWebPage(url: String) = externalTools.openWebPage(url)
 
     actual override fun openCallApp(phoneNumber: String?) = externalTools.openCallApp(phoneNumber)
-
 }

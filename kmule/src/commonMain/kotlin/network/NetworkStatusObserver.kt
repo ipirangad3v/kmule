@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class NetworkStatusObserver {
-
     private val _networkStatus = MutableStateFlow(false)
     val networkStatus: Flow<Boolean> get() = _networkStatus.asStateFlow()
 
@@ -31,8 +30,9 @@ class NetworkStatusObserver {
 
     private suspend fun checkNetworkStatus(): Boolean {
         return try {
-            val client = HttpClient() {
-            }
+            val client =
+                HttpClient {
+                }
             val response = client.get("https://www.google.com").toString()
             response.isNotEmpty()
         } catch (e: Throwable) {
@@ -41,5 +41,3 @@ class NetworkStatusObserver {
         }
     }
 }
-
-
