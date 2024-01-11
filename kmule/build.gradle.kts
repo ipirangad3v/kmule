@@ -33,6 +33,10 @@ kotlin {
             implementation(libs.kotlin.test)
             implementation(libs.mockito.core)
             implementation(libs.roboelectric)
+            implementation(libs.coroutines.test)
+        }
+        iosTest.dependencies {
+            implementation(libs.kotlin.test)
         }
     }
 }
