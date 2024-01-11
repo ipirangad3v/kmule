@@ -1,3 +1,5 @@
+package external
+
 import Constants.INSTAGRAM_URL
 import Constants.SPOTIFY_URL
 import Constants.YOUTUBE_URL
@@ -6,7 +8,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
-import external.ExternalTools
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNotNull
 import org.junit.Before

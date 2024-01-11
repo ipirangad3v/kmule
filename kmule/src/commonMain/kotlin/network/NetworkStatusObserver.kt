@@ -28,7 +28,7 @@ class NetworkStatusObserver {
         }
     }
 
-    private suspend fun checkNetworkStatus(): Boolean {
+    suspend fun checkNetworkStatus(): Boolean {
         return try {
             val client =
                 HttpClient {

@@ -12,6 +12,7 @@ coroutines = "1.7.3"
 ktor-client = "2.3.7"
 mockito = "5.2.0"
 roboelectric = "4.10.3"
+coroutines-test = "1.7.3"
 
 [libraries]
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
@@ -28,6 +29,7 @@ ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor-cl
 ktor-client-ios = { module = "io.ktor:ktor-client-ios", version.ref = "ktor-client" }
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
 roboelectric = { module = "org.robolectric:robolectric", version.ref = "roboelectric" }
+coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines-test" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
