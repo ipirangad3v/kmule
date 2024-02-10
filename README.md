@@ -60,6 +60,13 @@ the `commonMain` module. These functions include:
 - `openCallApp(phoneNumber: String?)`: Opens Twitter and directs to the specified profile. If the
   profile is null, the Twitter app will open with empty prompt.
 - `openWebPage(url: String)`: Opens a web page in the default browser.
+- `openEmailApp(email: String?)`: Opens the email app with the specified email address. If the email
+  is null, the email app will open with an empty prompt.
+- `openWhatsApp(phoneNumber: String?)`: Opens WhatsApp and directs to the specified phone number. If
+  the phone number is null, the WhatsApp app will open on the home screen.
+- `openMaps(latitude: Double?, longitude: Double?,label: String?)`: Opens the maps app and directs to the specified
+  latitude and longitude. If the latitude and longitude are null, the maps app will open on the home screen. label can be used to specify the label of the location and is optional.
+- `openSettings()`: Opens the settings app.
 
 Each implementation of these functions is optimized to work natively on different platforms. For
 example, on Android, these functions use `Intent` to open the corresponding apps, while on iOS, they
@@ -179,5 +186,6 @@ works correctly on iOS:
 <string>youtube</string>
 <string>spotify</string>
 <string>instagram</string>
+<string>whatsapp</string>
 </array>
 ```

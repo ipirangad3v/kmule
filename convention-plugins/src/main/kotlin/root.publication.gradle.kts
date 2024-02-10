@@ -10,7 +10,7 @@ ext["ossrhPassword"] = null
 
 allprojects {
     group = "digital.thon"
-    version = "0.0.3"
+    version = "0.0.4"
 }
 
 nexusPublishing {

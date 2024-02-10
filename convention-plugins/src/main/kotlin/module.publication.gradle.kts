@@ -66,6 +66,7 @@ fun getSecrets() {
         }.onEach { (name, value) ->
             ext[name.toString()] = value
         }
+        ext["secretKey"] = "ADD GPG KEY HERE"
     } else {
         ext["secretKey"] = System.getenv("SIGNING_SECRET_KEY")
         ext["signingPassword"] = System.getenv("SIGNING_PASSWORD")

@@ -60,6 +60,46 @@ internal class ExternalTools(private val context: WeakReference<Context>?) :
         )
     }
 
+    override fun openWhatsApp(phoneNumber: String?) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://wa.me/${phoneNumber ?: ""}"))
+        handleIntent(
+            intent,
+            intent
+        )
+    }
+
+    override fun openMaps(latitude: Double?, longitude: Double?, label: String?) {
+        val uri =
+            "geo:${latitude ?: 0},${longitude ?: 0}${if (latitude != null && longitude != null) "?q=$latitude,$longitude" else ""}${if (label != null) "($label)" else ""}"
+        val intent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse(uri)
+        )
+        handleIntent(
+            intent,
+            intent
+        )
+    }
+
+    override fun openEmail(email: String?) {
+        val intent = Intent(
+            Intent.ACTION_SENDTO,
+            Uri.parse("mailto:${email ?: ""}")
+        )
+        handleIntent(
+            intent,
+            intent
+        )
+    }
+
+    override fun openSettings() {
+        val intent = Intent(android.provider.Settings.ACTION_SETTINGS)
+        handleIntent(
+            intent,
+            intent
+        )
+    }
+
     private fun getContextOrThrow(): Context {
         return context?.get() ?: throw MissingAndroidContextException()
     }
