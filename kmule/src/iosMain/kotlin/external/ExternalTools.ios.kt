@@ -5,9 +5,17 @@ import Constants.SPOTIFY_SHOW_INTENT
 import Constants.SPOTIFY_URL
 import Constants.YOUTUBE_IOS_APP_URL
 import Constants.YOUTUBE_URL
+import kotlinx.cinterop.ExperimentalForeignApi
+import platform.CoreLocation.CLLocationCoordinate2DMake
 import platform.Foundation.NSURL
+import platform.MapKit.MKLaunchOptionsDirectionsModeDriving
+import platform.MapKit.MKLaunchOptionsDirectionsModeKey
+import platform.MapKit.MKMapItem
+import platform.MapKit.MKPlacemark
 import platform.UIKit.UIApplication
+import platform.UIKit.UIApplicationOpenSettingsURLString
 
+@OptIn(ExperimentalForeignApi::class)
 internal class ExternalTools(private val application: UIApplication) : ExternalToolsInterface {
     override fun openSpotify(spotifyShowId: String?) {
         val spotifyUrl =
@@ -44,6 +52,36 @@ internal class ExternalTools(private val application: UIApplication) : ExternalT
     override fun openCallApp(phoneNumber: String?) {
         val callUrl = NSURL(string = "tel:${phoneNumber ?: ""}}")
         handleIntent(callUrl)
+    }
+
+    override fun openWhatsApp(phoneNumber: String?) {
+        val whatsappUrl = NSURL(string = "https://wa.me/${phoneNumber ?: ""}")
+        handleIntent(whatsappUrl)
+    }
+
+    override fun openMaps(latitude: Double?, longitude: Double?, label: String?) {
+        if (latitude == null || longitude == null) {
+            val mapItem = MKMapItem.mapItemForCurrentLocation()
+            label?.let { mapItem.name = it }
+            mapItem.openInMapsWithLaunchOptions(launchOptions = mapOf(MKLaunchOptionsDirectionsModeKey to MKLaunchOptionsDirectionsModeDriving))
+
+        } else {
+            val coordinate = CLLocationCoordinate2DMake(latitude, longitude)
+            val mapItem = MKMapItem(placemark = MKPlacemark(coordinate = coordinate, addressDictionary = null))
+            label?.let { mapItem.name = it }
+            mapItem.openInMapsWithLaunchOptions(launchOptions = mapOf(MKLaunchOptionsDirectionsModeKey to MKLaunchOptionsDirectionsModeDriving))
+        }
+
+    }
+
+    override fun openEmail(email: String?) {
+        val emailUrl = NSURL(string = "mailto:${email ?: ""}")
+        handleIntent(emailUrl)
+    }
+
+    override fun openSettings() {
+        val settingsUrl = NSURL(string = UIApplicationOpenSettingsURLString)
+        handleIntent(settingsUrl)
     }
 
     private fun handleIntent(

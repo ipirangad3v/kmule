@@ -13,5 +13,13 @@ expect object Kmule : ExternalToolsInterface, NetworkToolsInterface {
 
     override fun openCallApp(phoneNumber: String?)
 
+    override fun openWhatsApp(phoneNumber: String?)
+
+    override fun openMaps(latitude: Double?, longitude: Double?, label: String?)
+
+    override fun openEmail(email: String?)
+
+    override fun openSettings()
+
     override val networkStatus: Flow<Boolean>
 }

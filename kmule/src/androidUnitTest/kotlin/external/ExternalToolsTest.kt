@@ -88,6 +88,30 @@ class ExternalToolsTest {
         verifyIntent("tel:123456789", Intent.ACTION_DIAL)
     }
 
+    @Test
+    fun testOpenWhatsApp() {
+        externalTools.openWhatsApp("123456789")
+        verifyIntent("https://wa.me/123456789")
+    }
+
+    @Test
+    fun testOpenWhatsAppWithNullNumber() {
+        externalTools.openWhatsApp(null)
+        verifyIntent("https://wa.me/")
+    }
+
+    @Test
+    fun testOpenMaps() {
+        externalTools.openMaps(1.0, 2.0)
+        verifyIntent("geo:1.0,2.0")
+    }
+
+    @Test
+    fun testOpenEmail() {
+        externalTools.openEmail("anthoni.ipiranga@gmail.com")
+        verifyIntent("mailto:anthoni.ipiranga@gmail.com", Intent.ACTION_SENDTO)
+    }
+
     private fun verifyIntent(
         url: String,
         action: String = Intent.ACTION_VIEW
