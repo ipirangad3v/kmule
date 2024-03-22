@@ -8,6 +8,11 @@
 name: Deploy to central
 
 on: workflow_dispatch
+env:
+  SIGNING_SECRET_KEY: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
+  SIGNING_PASSWORD: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
+  OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+  OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
 
 permissions:
   contents: read
@@ -20,46 +25,52 @@ jobs:
     strategy:
       matrix:
         include:
-          - target: publishKotlinMultiplatformPublicationToSonatypeRepository
-            os: macos-latest
           - target: publishIosArm64PublicationToSonatypeRepository
             os: macos-latest
-          - target: publishIosSimulatorArm64PublicationToSonatypeRepository
-            os: macos-latest
-          - target: publishAndroidDebugPublicationToSonatypeRepository
-            os: ubuntu-latest
           - target: publishAndroidReleasePublicationToSonatypeRepository
             os: ubuntu-latest
-          - target: publishJvmPublicationToSonatypeRepository
-            os: ubuntu-latest
-          - target: publishLinuxX64PublicationToSonatypeRepository
+          - target: publishKotlinMultiplatformPublicationToSonatypeRepository
             os: ubuntu-latest
     runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/cache@v3
-      with:
-        path: |
-          ~/.konan
-        key: ${{ runner.os }}-${{ hashFiles('**/.lock') }}
-    - name: Import GPG key
-      uses: crazy-max/ghaction-import-gpg@v5
-      with:
-        gpg_private_key: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
-        passphrase: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-    - name: Gradle publish
-      uses: gradle/gradle-build-action@ce999babab2de1c4b649dc15f0ee67e6246c994f
-      with:
-        arguments: |
-          ${{ matrix.target }}
-          closeSonatypeStagingRepository
-          -Psigning.gnupg.passphrase=${{secrets.OSSRH_GPG_SECRET_KEY_PASSWORD}}
-          -Psigning.gnupg.keyName=${{secrets.OSSRH_GPG_SECRET_KEY_ID}}
-          -PsonatypeUsername=${{secrets.OSSRH_USERNAME}}
-          -PsonatypePassword=${{secrets.OSSRH_PASSWORD}}
+      - uses: actions/checkout@v3
+      - name: Check if GPG secrets are set
+        run: |
+          if [ -z "${{ secrets.OSSRH_GPG_SECRET_KEY }}" ] || [ -z "${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}" ] || [ -z "${{ secrets.OSSRH_GPG_SECRET_KEY_ID }}" ]; then
+            echo "GPG secrets are not set"
+            exit 1
+          else
+            echo "GPG secrets are set"
+          fi
 
+      - name: Check if Sonatype credentials are set
+        run: |
+          if [ -z "${{ secrets.OSSRH_USERNAME }}" ] || [ -z "${{ secrets.OSSRH_PASSWORD }}" ]; then
+            echo "Sonatype credentials are not set"
+            exit 1
+          else
+            echo "Sonatype credentials are set"
+          fi
+      - name: Validate Gradle Wrapper
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.konan
+          key: ${{ runner.os }}-${{ hashFiles('**/.lock') }}
+      - name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@v5
+        with:
+          gpg_private_key: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
+          passphrase: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Gradle publish
+        uses: gradle/gradle-build-action@ce999babab2de1c4b649dc15f0ee67e6246c994f
+        with:
+          arguments: |
+            ${{ matrix.target }}
+            closeSonatypeStagingRepository
