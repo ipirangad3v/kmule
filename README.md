@@ -115,38 +115,6 @@ object NavigationHelper {
 
 ```
 
-## Network tools
-
-Kmule can easily be used to check network status on both Android and iOS. To do so, you need to
-collect the `networkStatus` flow and use it to check the network status.
-
-Here is a basic example of how to use the KMULE library to check internet connection in your project:
-
-```kotlin
-import Kmule.networkStatus
-import com.thondigital.nc.data.connectivity.ConnectivityChecker
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-
-class DefaultConnectivityChecker : ConnectivityChecker {
-  private var isNetworkAvailable = false
-  private val scope = CoroutineScope(Dispatchers.Main)
-
-  init {
-    scope.launch {
-      networkStatus.collect {
-        isNetworkAvailable = it
-      }
-    }
-  }
-
-
-  override fun isNetworkAvailable(): Boolean = isNetworkAvailable
-}
-```
-
-
 These are currently the features supported by KMULE, new ones coming soon.
 
 ## Android Specific Configuration

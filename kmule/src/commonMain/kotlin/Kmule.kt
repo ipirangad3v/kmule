@@ -1,8 +1,6 @@
 import external.ExternalToolsInterface
-import kotlinx.coroutines.flow.Flow
-import network.NetworkToolsInterface
 
-expect object Kmule : ExternalToolsInterface, NetworkToolsInterface {
+expect object Kmule : ExternalToolsInterface {
     override fun openSpotify(spotifyShowId: String?)
 
     override fun openYouTube(channelId: String?)
@@ -21,5 +19,4 @@ expect object Kmule : ExternalToolsInterface, NetworkToolsInterface {
 
     override fun openSettings()
 
-    override val networkStatus: Flow<Boolean>
 }

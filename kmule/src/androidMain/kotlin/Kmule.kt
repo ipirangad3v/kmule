@@ -2,15 +2,11 @@ import android.content.Context
 import exceptions.MissingAndroidContextException
 import external.ExternalTools
 import external.ExternalToolsInterface
-import network.NetworkStatusObserver
-import network.NetworkToolsInterface
 import java.lang.ref.WeakReference
 
-actual object Kmule : ExternalToolsInterface, NetworkToolsInterface {
+actual object Kmule : ExternalToolsInterface {
     private var context: WeakReference<Context>? = null
     private lateinit var externalTools: ExternalToolsInterface
-    private val networkStatusObserver = NetworkStatusObserver()
-    actual override val networkStatus = networkStatusObserver.networkStatus
 
     @Suppress("unused")
     //used by library users
