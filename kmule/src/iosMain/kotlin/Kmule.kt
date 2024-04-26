@@ -1,15 +1,10 @@
 import external.ExternalTools
 import external.ExternalToolsInterface
-import network.NetworkStatusObserver
-import network.NetworkToolsInterface
 import platform.UIKit.UIApplication
 
-actual object Kmule : ExternalToolsInterface, NetworkToolsInterface {
+actual object Kmule : ExternalToolsInterface {
     private val application = UIApplication.sharedApplication
     private val externalTools = ExternalTools(application)
-    private val networkStatusObserver = NetworkStatusObserver()
-    actual override val networkStatus = networkStatusObserver.networkStatus
-
     actual override fun openSpotify(spotifyShowId: String?) = externalTools.openSpotify(spotifyShowId)
 
     actual override fun openYouTube(channelId: String?) = externalTools.openYouTube(channelId)
