@@ -103,7 +103,7 @@ class ExternalToolsTest {
     @Test
     fun testOpenMaps() {
         externalTools.openMaps(1.0, 2.0)
-        verifyIntent("geo:1.0,2.0")
+        verifyIntent("geo:1.0,2.0?q=1.0,2.0")
     }
 
     @Test
