@@ -66,7 +66,11 @@ fun getSecrets() {
         }.onEach { (name, value) ->
             ext[name.toString()] = value
         }
-        ext["secretKey"] = "ADD GPG KEY HERE"
+        ext["secretKey"] = """
+            -----BEGIN PGP PRIVATE KEY BLOCK-----
+GPG KEY HERE
+            -----END PGP PRIVATE KEY BLOCK-----
+        """.trimIndent()
     } else {
         ext["secretKey"] = System.getenv("SIGNING_SECRET_KEY")
         ext["signingPassword"] = System.getenv("SIGNING_PASSWORD")
