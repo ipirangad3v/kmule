@@ -30,6 +30,7 @@ kotlin {
             implementation(libs.ktor.client.core)
         }
         commonTest.dependencies {
+            implementation(libs.mockito.core)
             implementation(libs.kotlin.test)
             implementation(libs.roboelectric)
             implementation(libs.coroutines.test)

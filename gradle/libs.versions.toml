@@ -8,6 +8,7 @@ coroutines = "1.8.0"
 ktor-client = "2.3.7"
 roboelectric = "4.12.1"
 coroutines-test = "1.8.0"
+mockito = "5.2.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -18,6 +19,7 @@ ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor-cl
 ktor-client-ios = { module = "io.ktor:ktor-client-ios", version.ref = "ktor-client" }
 roboelectric = { module = "org.robolectric:robolectric", version.ref = "roboelectric" }
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines-test" }
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
